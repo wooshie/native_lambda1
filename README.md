@@ -2,7 +2,7 @@
 
 
 Use **docker_image_build_and_deployment_script.sh** either directly, if your system supports it (Linux for example) or something similar on other systems.
-Make sure you have Docker installed, as the build for AWS Lmabda, for compatibility reasons, is done in Amazon Linux 2 environment (container).
+Make sure you have Docker installed, as the build for AWS Lambda, for compatibility reasons, is done in Amazon Linux 2 environment (container).
 
 
 
