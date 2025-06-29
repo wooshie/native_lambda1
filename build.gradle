@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.graalvm.buildtools.native' version '0.10.6'
+}
+
+group = 'com.bambr'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+
+    // AWS SDK BOM
+    implementation platform('software.amazon.awssdk:bom:2.26.29')
+    
+    // AWS Lambda runtime
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.3'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
+    
+    // AWS SDK services
+    implementation 'software.amazon.awssdk:lambda'
+    implementation 'software.amazon.awssdk:s3'
+    
+    // Spring Boot dependencies
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+graalvmNative {
+    binaries {
+        main {
+            buildArgs.addAll([
+                '--target=linux-amd64',
+                '--no-fallback',
+                '--enable-url-protocols=http,https',
+                '-H:+ReportExceptionStackTraces',
+                '-H:+PrintClassInitialization',
+                '--initialize-at-build-time=com.fasterxml.jackson',
+                '--initialize-at-run-time=org.springframework',
+                '-H:+AllowVMInspection',
+                '--enable-all-security-services'
+            ])
+        }
+    }
+}
