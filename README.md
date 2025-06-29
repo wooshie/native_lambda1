@@ -9,4 +9,4 @@ Make sure you have Docker installed, as the build for AWS Lmabda, for compatibil
 ***Deployment***
 
 
-Just create AWS LAmbda function from scratch, select Amazon Linux 2 runtime, give it name and then upload zip with binary, renamed to "bootstrap", this app should echo any request.
+Just create AWS LAmbda function from scratch, select Amazon Linux 2 runtime, give it name and then upload zip containing binary, which is renamed to "bootstrap", this app should echo any request.
